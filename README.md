@@ -251,3 +251,4 @@ If you still have doubts about the project and/or this specification do not hesi
 
 **GOOD LUCK and HAPPY SPLENDOR!**
 
+# splendor-contest-agent
