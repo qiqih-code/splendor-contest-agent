@@ -78,6 +78,7 @@ class Game:
             agent_index = self.game_rule.getCurrentAgentIndex()
             agent = self.agents[agent_index]
             game_state = self.game_rule.current_game_state
+            game_state.agent_to_move = agent_index
             actions = self.game_rule.getLegalActions(game_state, agent_index)
             actions_copy = copy.deepcopy(actions)
             gs_copy = copy.deepcopy(game_state)
@@ -95,8 +96,9 @@ class Game:
             if action_counter==1 and self.displayer is not None:
                 self.displayer._DisplayState(self.game_rule.current_game_state)
                         
-            #If interactive mode, obtain action via user input for Citrine agent.
+            #If interactive mode, update displayer and obtain action via user input.
             if self.interactive and agent_index==1:
+                self.displayer._DisplayState(self.game_rule.current_game_state)
                 selected = self.displayer.user_input(actions_copy)
                 
             else:

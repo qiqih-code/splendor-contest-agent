@@ -24,7 +24,10 @@ class Card():
         self.deck_id = deck_id
         self.points = points
     def __str__(self):
-        return('{} card costing {}'.format(self.colour, self.cost))
+        gem_string = ''
+        for colour,number in self.cost.items():
+            gem_string += f'{", " if gem_string!="" else ""}{number} {colour}'
+        return f'Tier {self.deck_id+1} {self.colour} card costing {gem_string}'
     def __repr__(self):
         return self.code
     def __eq__(self, other): #Equal in the ways that matter: code is identical, and points haven't been tampered with.
@@ -36,6 +39,7 @@ class SplendorState(GameState):
     def __init__(self, num_agents):
         self.board  =  self.BoardState(num_agents)
         self.agents = [self.AgentState(i) for i in range(num_agents)]
+        self.agent_to_move = 0
     
     class BoardState:
         def __init__(self, num_agents):

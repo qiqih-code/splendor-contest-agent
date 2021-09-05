@@ -81,13 +81,23 @@ class AgentArea():
             ypos = PNBL_POS[1]+PLYR_SEP*self.agent_id+PNBL_SEP*i
             self.nobles.append(self.root.create_image(xpos, ypos, 
                                     image=resources['nobles_small'][agent.nobles[i][0]], tags='noble_small'))
-            
-            
+      
+        
+def can_buy(agent, card):
+    wild = agent.gems['yellow']
+    for colour,cost in card.cost.items():
+        wild -= max(cost - agent.gems[colour] - len(agent.cards[colour]), 0)
+        if wild < 0:
+            return False
+    return True
+
+           
 class BoardArea():
     def __init__(self, root):
         self.root  = root
         self.start = True
         self.dealt = [[None]*4 for i in range(3)]
+        self.dealt_transparencies = [[None]*4 for i in range(3)]
         self.gems  = {}
         self.nobles = []
         self.cntrs = [None]*3
@@ -96,7 +106,8 @@ class BoardArea():
                             text=str([40,30,20][i]), font=('times', int(20*s)), fill=['green','#bf7c1d','blue'][i])
 
     #Update text and images on the gameboard.
-    def update(self, board, resources):
+    def update(self, state, resources, no_highlighting):
+        agent,board = state.agents[state.agent_to_move],state.board
         #If first update (start of the game), stagger image placements to make a simple animation.
         if self.start:
             self.start=False
@@ -138,6 +149,9 @@ class BoardArea():
                         card = board.dealt[i][j]
                         self.dealt[i][j] = (self.root.create_image(xpos, ypos, 
                                             image=resources['cards_large'][card.colour][card.code], tags='card_large'))
+                        if not no_highlighting and not can_buy(agent, board.dealt[i][j]):
+                            self.dealt_transparencies[i][j] = (self.root.create_image(xpos, ypos, 
+                                            image=resources['card_dull'], tags='card_large'))
             
         #Shared gem stacks.
         i = 0
@@ -157,8 +171,9 @@ class BoardArea():
         
                 
 class GUIDisplayer(Displayer):
-    def __init__(self, half_scale, delay = 0.1):
+    def __init__(self, half_scale, delay = 0.1, no_highlighting=False):
         self.delay = delay
+        self.no_highlighting = no_highlighting
         # Absolute positions for resources (cards, gems, nobles). All positions align with top-left of assets.
         global s,PLYR_POS,NAME_POS,PGEM_POS,PCRD_POS,PNBL_POS,PCRD_SEP,PLYR_SEP,D_COUNTR, RUNNING, \
                  CARD_POS,CARD_SEP,GEMS_POS,GEMS_SEP,NOBL_POS,PNBL_SEP,NOBL_SEP,CNVS_DIM, ACTN_BOX
@@ -227,6 +242,7 @@ class GUIDisplayer(Displayer):
             self.resources['nobles_small'][code] = tkinter.PhotoImage(\
                  file="Splendor/resources/nobles_small/{}".format(nobl)).subsample(int(1/s))                
         self.resources['card_sleeve'] = tkinter.PhotoImage(file="Splendor/resources/card_sleeve.png").subsample(int(1/s))
+        self.resources['card_dull']   = tkinter.PhotoImage(file="Splendor/resources/card_dull.png").subsample(int(1/s))
                 
         #Initialise canvas and place background table image.
         self.canvas = tkinter.Canvas(self.root, height=CNVS_DIM[1], width=CNVS_DIM[0])
@@ -252,7 +268,7 @@ class GUIDisplayer(Displayer):
         self.yscrollbar1 = tkinter.Scrollbar(self.action_frame, orient=tkinter.VERTICAL)
         self.action_box = tkinter.Listbox(self.action_frame,name="actions:", selectmode="single", 
                                 borderwidth=int(4*s), xscrollcommand=self.xscrollbar1.set, yscrollcommand=self.yscrollbar1.set,
-                                font=('times', 10), bg='black', selectbackground='black', fg='white')
+                                font=('times', 12), bg='black', selectbackground='black', fg='white')
         self.xscrollbar1.config(command=self.action_box.xview,troughcolor="white",bg="white")
         self.xscrollbar1.pack(side=tkinter.BOTTOM, fill=tkinter.X)
         self.yscrollbar1.config(command=self.action_box.yview,troughcolor="white",bg="white")
@@ -308,13 +324,13 @@ class GUIDisplayer(Displayer):
             for colour,number in combo.items():
                 string += f'_{colour}-{number}'
             return string
-            
+                    
         def str_to_combo(string):
             combo = {}
             values = string.split('_')[1:]
             for v in values:
                 v = v.split('-')
-                combo[v[0]] = v[1]
+                combo[v[0]] = int(v[1])
             return combo        
         
         #Organise actions by type.
@@ -326,6 +342,11 @@ class GUIDisplayer(Displayer):
         self.action_instruct.set('Select action type:')
         types = sorted(list(actions_organised.keys()))
         for t in types:
+            t = 'Collect up to 3 different gemstones' if t=='collect_diff' else \
+                'Collect 2 identical gemstones' if t=='collect_same' else \
+                'Reserve a card from the table' if t=='reserve' else \
+                'Buy a card from the table' if t=='buy_available' else \
+                'Buy a previously reserved card'
             self.action_box.insert(tkinter.END, t)
         self.prime_action_box()
         selected_type = types[self.selection.get()]
@@ -333,8 +354,19 @@ class GUIDisplayer(Displayer):
         
         #If type is buy or reserve, simply print actions, as they will be sparse enough.
         if selected_type in ['buy_available', 'buy_reserve', 'reserve']:
-            self.action_instruct.set('Select action:')
+            self.action_instruct.set(f'Select card to {"buy" if "buy" in selected_type else "reserve"}:')
             for a in actions:
+                action = a
+                if 'buy' in selected_type:
+                    a = f'{a["card"]}'
+                else:
+                    if a['collected_gems']:
+                        a = f'{a["card"]}, receiving a wild'
+                        if action['returned_gems']:
+                            a += f' and returning a {list(a["returned_gems"].keys())[0]} gemstone'
+                    else:
+                        a = f'{a["card"]}'
+                a += ', inviting a noble' if action['noble'] else ''
                 self.action_box.insert(tkinter.END, a)
             self.prime_action_box()
             return actions[self.selection.get()]
@@ -344,7 +376,7 @@ class GUIDisplayer(Displayer):
         collect_combos = sorted(list(set([combo_to_str(a['collected_gems']) for a in actions])))
         collect_combos = [str_to_combo(c) for c in collect_combos]
         for c in collect_combos:
-            self.action_box.insert(tkinter.END, c)
+            self.action_box.insert(tkinter.END, GemsToString(c))
         self.prime_action_box()
         collected_str = combo_to_str(collect_combos[self.selection.get()])
 
@@ -359,7 +391,7 @@ class GUIDisplayer(Displayer):
             return_combos = [str_to_combo(c) for c in return_combos]            
             self.action_instruct.set(f'Select gems to return:')
             for c in return_combos:
-                self.action_box.insert(tkinter.END, c)
+                self.action_box.insert(tkinter.END, GemsToString(c))
             self.prime_action_box()
             returned_str = combo_to_str(return_combos[self.selection.get()])
             for a in actions:
@@ -390,7 +422,7 @@ class GUIDisplayer(Displayer):
         self.canvas.delete('noble_small')
         
         #Update displayed areas (agents and board contents).
-        self.board_area.update(game_state.board, self.resources)
+        self.board_area.update(game_state, self.resources, self.no_highlighting)
         for agent,area in zip(game_state.agents,self.agent_areas):
             area.update(agent, self.resources)        
         self.canvas.update()

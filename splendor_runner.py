@@ -82,7 +82,7 @@ class HidePrint:
 
 
 def run(options,valid_game,msg):
-    displayer = GUIDisplayer(options.half_scale, options.delay)
+    displayer = GUIDisplayer(options.half_scale, options.delay, options.no_highlighting)
     if options.textgraphics:
         displayer = TextDisplayer()
     elif options.quiet or options.superQuiet:
@@ -266,7 +266,8 @@ def loadParameter():
     parser.add_option('--delay', type='float', help='Delay action in a play or replay by input (float) seconds (default 0.1)', default=0.1)
     parser.add_option('-p','--print', action='store_true', help='Print all the output in terminal when playing games, will diable \'-l\' automatically. (default: False)', default=False)
     parser.add_option('--half-scale', action='store_true', help='Display game at half-scale (default is 1920x1080)', default=False)
-    parser.add_option('--interactive', action='store_true', help="Gives the user control over the Citrine agent's actions", default=False)    
+    parser.add_option('--interactive', action='store_true', help="Gives the user control over the Citrine agent's actions", default=False)   
+    parser.add_option('--no-highlighting', action='store_true', help="Disables highlighting of potential card purchases", default=False)
 
     options, otherjunk = parser.parse_args(sys.argv[1:] )
     assert len(otherjunk) == 0, "Unrecognized options: " + str(otherjunk)
