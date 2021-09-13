@@ -177,15 +177,16 @@ class SplendorGameRule(GameRule):
     def calScore(self, game_state, agent_id):
         max_score = 0
         details = []
+        bought_cards = lambda a : sum([len(cards) for colour,cards in a.cards.items() if colour!='yellow'])
         for a in game_state.agents:
-            bought_cards = sum([len(cards) for colour,cards in a.cards.items() if colour!='yellow'])
-            details.append((a.id, bought_cards, a.score))
+            details.append((a.id, bought_cards(a), a.score))
             max_score = max(a.score, max_score)
         victors = [d for d in details if d[-1]==max_score]
         if len(victors) > 1 and agent_id in [d[0] for d in victors]:
             min_cards = min([d[1] for d in details])
-            if bought_cards==min_cards:
-                return game_state.agents[agent_id].score + 1 # Add one point if this agent was a tied victor, and had fewer cards.
+            if bought_cards(game_state.agents[agent_id])==min_cards:
+                # Add a half point if this agent was a tied victor, and had the fewest cards.
+                return game_state.agents[agent_id].score + .5
         return game_state.agents[agent_id].score
 
     #Generate a list of gem combinations that can be returned, if agent exceeds limit with collected gems.
