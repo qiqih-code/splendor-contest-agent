@@ -363,7 +363,7 @@ class GUIDisplayer(Displayer):
                     if a['collected_gems']:
                         a = f'{a["card"]}, receiving a wild'
                         if action['returned_gems']:
-                            a += f' and returning a {list(a["returned_gems"].keys())[0]} gemstone'
+                            a += f' and returning a {list(action["returned_gems"].keys())[0]} gemstone'
                     else:
                         a = f'{a["card"]}'
                 a += ', inviting a noble' if action['noble'] else ''
