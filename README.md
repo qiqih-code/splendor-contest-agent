@@ -121,11 +121,11 @@ The video will be shared with us through an unlisted youtube link at the top of 
 
 ## 3. Pre-contest feedback tournaments
 
-We will be running **informal tournaments** based on preliminary versions of teams' agents in the weeks before the final project submission. We will start once **five teams** have submitted their preliminary agents by tagging their repos with "`test-submission`".
+We will be running **test tournament** and **informal tournaments** based on preliminary versions of teams' agents in the weeks before the final project submission. We will only run with your submitted agent (please check [splendor.md](Splendor/splendor.md#official-tournaments) on how to submit by using tags). The **test tournament** will run your agent against a sample agent once to check if your agent can run on the server bug feel. The **informal tournaments** will be run daily (at the begin of each day), and your agent will be run against all others including all staff teams. The result will be available through this link: [http://www.comp90054.tk/](http://www.comp90054.tk/). 
 
-Participating in these pre-contests will give you **a lot of insights** on how your solution is performing and how to improve it. Results, including replays for every game, will be available only for those teams that have submitted. 
+We will start once **five teams** have submitted their preliminary agents by tagging their repos with "`test-submission`". Participating in these pre-contests will give you **a lot of insights** on how your solution is performing and how to improve it. Results, including replays for every game, will be available only for those teams that have submitted. 
 
-You can re-submit multiple times, and we will just run the version tagged `test-submission`. These tournaments carry no marking at all; they are just designed for continuous feedback for you to  debug and improve your solution! You do not need to certify these versions.
+You can re-submit multiple times, and we will just run the tagged version. These tournaments carry no marking at all; they are just designed for continuous feedback for you to  debug and improve your solution! You do not need to certify these versions.
 
 We will try to run these pre-competitions frequently, at least once a day once enough teams are submitting versions.
 

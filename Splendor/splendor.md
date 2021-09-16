@@ -134,15 +134,25 @@ The **seeds** used in the tournament will be fixed for replicability.
 
 The **results** of each tournament (pre-contest, preliminary, and final) will be published on a web-page where you will be able to see the overall rankings and scores for each match. You can also download replays, the seeds used, and the stdout / stderr logs for each agent.
 
-### Software, resources, tips
+### How to participate in? (Updated 17/09/2021)
+We will use tag to identify your submission for the test, practical tournament, preliminary submission and final submission: 
+* Your code tagged with "test-submission" will be cloned and run for testing
+* Your code tagged with "practical" will be cloned and run for practical tournament
+* Your code tagged with "preliminary" will be cloned and run for preliminary tournament
+* Your code tagged with "submission" will be cloned and run for final tournament
+In addition, your code will be run with the command:
+```
+python3 splendor_runner.py -r agents.{team_name1}.myTeam -c agents.{team_name2}.myTeam -t -s -l -m {num_of_games} > output/{team_name1}_vs_{team_name2}.out 2>&1"
+```
+* It implies that your team name should not contain any space or dot, or any other unrecognizable characters. We have automatically remove "." and replace " " with "_". Please contact the teaching staff to update your team name if needed. It does not necessarily match your repo name, but it need to be in the correct format and the same with your folder name under the directory of "agents/".
 
+### Software, resources, tips (Updated 17/09/2021)
 
-* Your code will be copied into a directory called `teams/<your_teamname>/` in the contest package. This means that if you import from other files outside `myTeam.py` they will not be found unless you tell Python to look in your team dir. You can do so by having the following code on top of your `myTeam.py`:
+* Your code (`agents/<your_teamname>/*`) will be copied into a directory called `agents/<your_teamname>/` in the contest package. This means that if you import from other files outside `myTeam.py` they will not be found unless you tell Python to look in your team dir. You can do so by having the following code on top of your `myTeam.py`:
     ```python
-    import sys
-    sys.path.append(’teams/your_teamname/’)
+    import agents.<your_teamname>.myTeam
     ```
-
+* We have provided two examples for how to import customised python files (Team: example) and how to open your customised files (Team: example2) in this repo: [https://github.com/COMP90054-2021S2/example.git](https://github.com/COMP90054-2021S2/example.git)
 * We have added some useful options:
      * `--delay` to slow down the execution if you want to visualize in slow
 motion;
@@ -150,20 +160,20 @@ motion;
 
     Use `--help` to check all the options.
 
-* Do *NOT* use the current working directory to write temporary files; instead, redirect all output to your own folder `./teams/<your_teamname>/`. For example, if you use a planner online, and generate PDDL files and solutions, redirect your planner call, solution outputs, etc., to your own folder. You can use Python code to do it automatically, or you can hardcode it assuming that your team will be located in `./teams/<your_teamname>/` folder.
+* Do *NOT* use the current working directory to write temporary files; instead, redirect all output to your own folder `./agents/<your_teamname>/`. For example, if you use a planner online, and generate PDDL files and solutions, redirect your planner call, solution outputs, etc., to your own folder. You can use Python code to do it automatically, or you can hardcode it assuming that your team will be located in `./agents/<your_teamname>/` folder.
 * If you want to use any other 3rd-party executable please discuss with us before submission. You can assume that `TensorFlow`, `keras`, `sklearn`, `numpy`, `scipy` and `neat-python` libraries are installed in our running environment, using the latest version available in Ubuntu 18.04. Planner `ff` executable version 2.1 of the [Metric-FF planner](https://fai.cs.uni-saarland.de/hoffmann/metric-ff.html) will be available in `/usr/local/bin`.
 
 ### Teams
 
 You may work in teams of up to 3/4 people (2 in some cases).
 
-### Ranking
+### Ranking (updated 17/09/2021 on the staff team prefix)
 
 Rankings are determined according to the number of points received in a nightly round-robin tournaments, where a win is worth 3 points, a tie is worth 1 point, and losses are worth 0 (Ties are not worth very much to discourage stalemates). 
 
 Extra credit will be awarded according to the final competition, but participating early in the pre-competitions will increase your learning and feedback. 
 
-In addition, dastardly staff members have entered the tournament with their own devious agents, seeking fame and glory. These agents have team names beginning with `Staff-`. 
+In addition, dastardly staff members have entered the tournament with their own devious agents, seeking fame and glory. These agents have team names beginning with `staffTeam`. 
 
 
  The earlier you submit your agents, the better your chances of earning  a high ranking, and the more chances you will have to defeat the staff agents.
