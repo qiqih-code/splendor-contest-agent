@@ -137,9 +137,9 @@ The **results** of each tournament (pre-contest, preliminary, and final) will be
 ### How to participate in? (Updated 17/09/2021)
 We will use tag to identify your submission for the test, practical tournament, preliminary submission and final submission: 
 * Your code tagged with "test-submission" will be cloned and run for testing
-* Your code tagged with "practical" will be cloned and run for practical tournament
-* Your code tagged with "preliminary" will be cloned and run for preliminary tournament
-* Your code tagged with "submission" will be cloned and run for final tournament
+* Your code tagged with "informal-submission" will be cloned and run for informal tournament
+* Your code tagged with "preliminary-submission" will be cloned and run for preliminary tournament
+* Your code tagged with "final-submission" will be cloned and run for final tournament
 In addition, your code will be run with the command:
 ```
 python3 splendor_runner.py -r agents.{team_name1}.myTeam -c agents.{team_name2}.myTeam -t -s -l -m {num_of_games} > output/{team_name1}_vs_{team_name2}.out 2>&1"
