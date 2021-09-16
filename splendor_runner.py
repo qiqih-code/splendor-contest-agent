@@ -41,6 +41,7 @@ def loadAgent(file_list,name_list,superQuiet = True):
             traceback.print_exc()
             pass
         except:
+            traceback.print_exc()
             pass
 
         # if student's agent does not exist, use random agent.
