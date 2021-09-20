@@ -148,7 +148,7 @@ python3 splendor_runner.py -r agents.{team_name1}.myTeam -c agents.{team_name2}.
 
 ### Software, resources, tips (Updated 17/09/2021)
 
-* Your code (`agents/<your_teamname>/*`) will be copied into a directory called `agents/<your_teamname>/` in the contest package. This means that if you import from other files outside `myTeam.py` they will not be found unless you tell Python to look in your team dir. You can do so by having the following code on top of your `myTeam.py`:
+* Your code (`agents/<your_teamname>/*`, which means every files in that directory) will be copied into a directory called `agents/<your_teamname>/` in the contest package. This means that if you import from other files outside `myTeam.py` they will not be found unless you tell Python to look in your team dir. You can do so by having the following code on top of your `myTeam.py`:
     ```python
     import agents.<your_teamname>.myTeam
     ```

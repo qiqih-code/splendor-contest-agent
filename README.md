@@ -47,7 +47,7 @@ The purpose of this project is to implement a Splendor Autonomous Agent that can
 
 This is a **group project** of 3 or 4 members. Now that you have a repo, the next thing to do is to register your team in the [Project Contest Team Registration Form](https://forms.gle/WuVi7e4yHMxNkgGd7) and tell the other students to join the team in GitHub Classroom. 
  
-**Your task** is to develop an autonomous Splendor agent team to play the **Splendor Contest** by suitably modifying file [`agents/myTeam.py`](agents/myTeam.py) (and maybe some other auxiliarly files you may implement). The code submitted should be internally commented at high standards and be error-free and _never crash_. 
+**Your task** is to develop an autonomous Splendor agent team to play the **Splendor Contest** by suitably modifying file [`agents/<your_teamname>/myTeam.py`](agents/your_teamname/myTeam.py) (please change "<your_teamname>" with your own team name and there maybe some other auxiliarly files you may implement). The code submitted should be internally commented at high standards and be error-free and _never crash_. 
 
 In your solution, you have to use at **least 2 AI-related techniques** (**3 techniques at least for groups of 4**) that have been discussed in the subject or explored by you independently, and you can combine them in any form. **We won't accept a final submission with less than 2/3 techniques**. Some candidate techniques that you may consider are:
 
@@ -87,7 +87,7 @@ There will be two code submissions for this project, and one video report.
 
 In the **preliminary submission** (23:59 Monday 4th October, Week 10), you are to:
  
-1. Submit your first working version of your solution, by tagging the commit as "`preliminary`". 
+1. The `agents/<your_teamname>/myTeam.py` implementing your AI-based Splendor agent team as per instructions above by tagging the relevant commit as "`preliminary-submission`". 
 2. Fill the [Project Certification \& Contribution Form (PRELIMINARY)](https://forms.gle/rg6ddaX7MbrpCLrJ9).
  > :warning: Each member of the team should fill a separate certification form. Members who do not certify will not be marked and will be awarded zero marks.
 
@@ -96,7 +96,7 @@ In the **preliminary submission** (23:59 Monday 4th October, Week 10), you are t
 In the **final submission** (23:59 Monday 18th October, Week 12) you are to submit your final submission to the project, which includes:
 
 
-1. The `agents/myTeam.py` implementing your AI-based Splendor agent team as per instructions above by tagging the relevant commit as "`submission`". 
+1. The `agents/<your_teamname>/myTeam.py` implementing your AI-based Splendor agent team as per instructions above by tagging the relevant commit as "`final-submission`". 
 2. A completed [TEAM.md](TEAM.md) file, with all the team member details. 
 3. A **Wiki** in your GitHub team repository, documenting and critically analysing your Splendor agent system. 
 ![wiki](img/wiki.png)
@@ -119,11 +119,11 @@ Your presentation must end with a live demo of your main different implementatio
 The video will be shared with us through an unlisted youtube link at the top of the **Wiki** of your GitHub repository.
  
 
-## 3. Pre-contest feedback tournaments
+## 3. Pre-contest feedback tournaments (Updated 2021/09/22)
 
-We will be running **test tournament** and **informal tournaments** based on preliminary versions of teams' agents in the weeks before the final project submission. We will only run with your submitted agent (please check [splendor.md](Splendor/splendor.md#official-tournaments) on how to submit by using tags). The **test tournament** will run your agent against a sample agent hourly to check if your agent can run on the server bug-free. The **informal tournaments** will be run daily (at the begin of each day), and your agent will be run against all others including all staff teams. The result will be available through this link: [http://www.comp90054.tk/](http://www.comp90054.tk/). 
+We will be running **test tournament** and **informal tournaments** based on preliminary versions of teams' agents in the weeks before the final project submission. We will only run with your submitted agent (please check [splendor.md](Splendor/splendor.md#official-tournaments) on how to submit by using tags). The **test tournament** will run your agent against a sample agent hourly to check if your agent can run on the server bug-free. The **informal tournaments** will be run twice a day (at the begin of each day), and your agent will be run against all others including all staff teams. The result will be available through this link: [http://www.comp90054.tk/](http://www.comp90054.tk/). 
 
-We will start once **five teams** have submitted their preliminary agents by tagging their repos with "`test-submission`". Participating in these pre-contests will give you **a lot of insights** on how your solution is performing and how to improve it. Results, including replays for every game, will be available only for those teams that have submitted. 
+Participating in these pre-contests will give you **a lot of insights** on how your solution is performing and how to improve it. Results, including replays for every game, will be available only for those teams that have submitted. 
 
 You can re-submit multiple times, and we will just run the tagged version. These tournaments carry no marking at all; they are just designed for continuous feedback for you to  debug and improve your solution! You do not need to certify these versions.
 
