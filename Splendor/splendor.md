@@ -65,6 +65,8 @@ We have made a few alterations to these rules for computational reasons:
 
 * The rules state that if you are either approaching or have reached the gem limit (10), you are still allowed to take up to 3 gems as available, but you need to discard down to the limit by the end of your turn. However, this is clunky if implemented as-is, as it means you can return some or all of the gems you picked up. Instead, when generating actions, the game engine will not allow the same colour gem to appear in the collected\_gems and returned\_gems fields. Likewise, if you exceed 10 by reserving a card and receiving a wild, you need to return a non-wild gem.
 
+* Agents are now _always_ permitted to take up to three different gems. This means that your agent could select two different colours for its turn, even when it could have selected three.
+
 * Agents are limited to 7 cards per colour for the purposes of a clean interface. This is not expected to affect gameplay, as there is essentially zero strategic reason to exceed this limit.
 
 * Agents aren't permitted to pay with a wild if they can instead cover the cost with regular gems. Although there may be rare strategic instances where holding on to coloured gems is beneficial (by virtue of shorting players from resources), in this implementation, this edge case is not worth added complexity.
